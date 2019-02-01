@@ -10,18 +10,19 @@
 
 namespace unionco\relatedentrytypes;
 
-use unionco\relatedentrytypes\fields\EntryType as EntryTypeField;
-
 use Craft;
-use craft\base\Plugin;
-use craft\services\Plugins;
-use craft\events\PluginEvent;
-use craft\services\Fields;
-use craft\events\RegisterComponentTypesEvent;
 
 use yii\base\Event;
+use craft\base\Plugin;
 use craft\web\UrlManager;
+use craft\services\Fields;
+use craft\services\Plugins;
+use craft\events\PluginEvent;
+
 use craft\events\RegisterUrlRulesEvent;
+use craft\events\RegisterComponentTypesEvent;
+use unionco\relatedentrytypes\fields\EntryType as EntryTypeField;
+use unionco\relatedentrytypes\twigextensions\RelatedEntryTypesTwigExtension;
 
 /**
  * Class RelatedEntryTypes
@@ -61,6 +62,8 @@ class RelatedEntryTypes extends Plugin
         self::$plugin = $this;
 
         $this->controllerNamespace = '\unionco\relatedentrytypes\controllers';
+
+        Craft::$app->view->registerTwigExtension(new RelatedEntryTypesTwigExtension());
         
         Event::on(
             Fields::class,

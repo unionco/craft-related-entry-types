@@ -33,6 +33,7 @@ class EntryType extends Entries
     // =========================================================================
 
     public $sections;// = '';
+    //public $types;
     public $entryTypes;// = '';
 
     // Static Methods
@@ -145,7 +146,7 @@ class EntryType extends Entries
                 'id' => $id,
                 'namespacedId' => $namespacedId,
                 'sources' => $this->sources,
-                'entryTypes' => $this->entryTypes,
+                'types' => $this->types,
                 'elements' => $value,
             ]
         );
@@ -178,7 +179,8 @@ class EntryType extends Entries
     {
         $request = Craft::$app->request->getBodyParams();
         $this->sections = array_values($request['types'][self::class]['sources']);
-        $this->entryTypes = array_values($request['types'][self::class]['entryTypes']);
+        $entryTypes = $request['entryTypes'] ?? $request['types'][self::class]['entryTypes'];
+        $this->entryTypes = array_values($entryTypes);
 
         return parent::beforeSave($isNew);
     }

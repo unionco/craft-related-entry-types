@@ -16,16 +16,6 @@
 {% import "_includes/forms" as forms %}
 
 {% do view.registerAssetBundle("unionco\\relatedentrytypes\\assetbundles\\entrytypefield\\EntryTypeFieldAsset") %}
-{# 
-{{ forms.textField({
-    label: 'Some Attribute',
-    instructions: 'Enter some attribute here.',
-    id: 'someAttribute',
-    name: 'someAttribute',
-    value: field['someAttribute']})
-}} #}
-
-{% import "_includes/forms" as forms %}
 
 {% set sourceOptions = field.getSourceOptions() %}
 
@@ -60,7 +50,12 @@
     {% endblock %}
 
     {% block entryTypesSelectArea %}
-        <div data-entry-types-select-area></div>
+        <div data-entry-types-select-area>
+            {% include 'related-entry-types/_partials/EntryType_types' with {
+                sections: selectedSections(field),
+                values: field.entryTypes
+            } only %}
+        </div>
     {% endblock %}
 
     {% block limitField %}

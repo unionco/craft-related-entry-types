@@ -14,14 +14,15 @@ class DefaultController extends Controller
     {
         $this->requirePostRequest();
         $rawBody = Craft::$app->request->getRawBody();
-        $sectionUids = \json_decode($rawBody);
+        $reqBody = \json_decode($rawBody);
+
+        $sectionUids = $reqBody->sectionUids;
+        $selectedEntryTypeIds = $reqBody->entryTypes ?? [];
 
         if (count($sectionUids) < 1) {
             return '';
         }
 
-
-        //var_dump($sectionUids); die;
         $sections = null;
         if (count($sectionUids) == 1 && $sectionUids[0] == '*') {
             $sections = Craft::$app->getSections()->getAllSections();
@@ -31,25 +32,25 @@ class DefaultController extends Controller
                 return Craft::$app->getSections()->getSectionByUid($uid);
             }, $sectionUids);
         }
-
-        // var_dump($sections); die;
-        $entryTypes = [];
         
-        foreach ($sections as $section) {
-            $entryTypesForSection = Craft::$app->sections->getEntryTypesBySectionId($section->id);
-            $entryTypes[$section->id] = array_map(function ($entryType) {
+        $selectedEntryTypes = [];
+        if (count($selectedEntryTypes)) {
+            $selectedEntryTypes = array_map(function ($selectedEntryTypeId) {
+                $entryType = Craft::$app->getSections()->getEntryTypeById($selectedEntryTypeId);
                 return [
                     'value' => $entryType->id,
                     'id' => $entryType->id,
                     'label' => $entryType->name,
                 ];
-            }, $entryTypesForSection);
+            }, $selectedEntryTypeIds);
         }
+
         return $this->renderTemplate(
-            'related-entry-types/_partials/EntryType_types', 
+            'related-entry-types/_partials/EntryType_types',
             [
                 'sections' => $sections,
-                'entryTypes' => $entryTypes,
+                'types' => $selectedEntryTypes,
+                'values' => $selectedEntryTypeIds,
             ]
         );
     }

@@ -1,12 +1,26 @@
 {% import "_includes/forms" as forms %}
 {# {{ dump(sections)}} #}
-{% for section in sections %}
-    {% set entryTypes = entryTypes[section.id] %}
-    {{ forms.checkboxSelectField({
-            label: section.name|t('related-entry-types'),
-            id: 'entryTypes-' ~ section.id,
-            name: 'types[unionco\\relatedentrytypes\\fields\\EntryType][entryTypes][' ~ section.id ~ ']',
-            options: entryTypes,
-            showAllOption: true
-        }) }}
-{% endfor %}
+{# {% set sections = selectedSections() %} #}
+{# {% for section in sections %} #}
+{# {% endfor %} #}
+
+{# {{ dump(entryTypes) }} #}
+{% if entryTypes is not defined %}
+    {% set entryTypes = entryTypes(sections) %}
+{% endif %}
+
+{% if values is not defined %}
+    {% set values = entryTypeValues(entryTypes) %}
+{% endif %}
+{{ dump(values) }}
+{# EntryType_types - dump values
+{{ dump(values) }} #}
+
+{{ forms.checkboxSelectField({
+    label: 'Entry Types'|t('related-entry-types'),
+    name: 'entryTypes',
+    options: entryTypes,
+    showAllOption: false,
+    values: values
+}) }}
+{# 'types[unionco\\relatedentrytypes\\fields\\EntryType][types]', #}
