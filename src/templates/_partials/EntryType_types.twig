@@ -1,0 +1,12 @@
+{% import "_includes/forms" as forms %}
+{# {{ dump(sections)}} #}
+{% for section in sections %}
+    {% set entryTypes = entryTypes[section.id] %}
+    {{ forms.checkboxSelectField({
+            label: section.name|t('related-entry-types'),
+            id: 'entryTypes-' ~ section.id,
+            name: 'types[unionco\\relatedentrytypes\\fields\\EntryType][entryTypes][' ~ section.id ~ ']',
+            options: entryTypes,
+            showAllOption: true
+        }) }}
+{% endfor %}

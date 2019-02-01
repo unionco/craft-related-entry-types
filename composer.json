@@ -1,0 +1,39 @@
+{
+    "name": "unionco/craft-related-entry-types",
+    "description": "A Craft Field type that allows more control over related entries.",
+    "type": "craft-plugin",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "related entry types"
+    ],
+    "support": {
+        "docs": "https://github.com/unionco/related-entry-types/blob/master/README.md",
+        "issues": "https://github.com/unionco/related-entry-types/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Abry Rath <abry.rath@union.co>",
+            "homepage": "https://github.com/unionco"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "unionco\\relatedentrytypes\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Related Entry Types",
+        "handle": "related-entry-types",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/unionco/related-entry-types/master/CHANGELOG.md",
+        "class": "unionco\\relatedentrytypes\\RelatedEntryTypes"
+    }
+}
