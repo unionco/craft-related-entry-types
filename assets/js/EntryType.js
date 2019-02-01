@@ -14,7 +14,7 @@ class EntryType {
         this.fieldContainer = document.querySelector('#types-unionco-relatedentrytypes-fields-EntryType-sources-field');
         if (this.fieldContainer) {
             this.sectionCheckboxes = this.fieldContainer.querySelectorAll('input[type="checkbox"]');
-            console.log(this.checkboxes);
+            console.log(this.sectionCheckboxes);
             if (this.sectionCheckboxes) {
                 this.sectionCheckboxes.forEach(checkbox => checkbox.addEventListener('change', this.handleSourcesChange.bind(this)));
             }

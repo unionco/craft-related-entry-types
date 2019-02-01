@@ -61,7 +61,9 @@ class RelatedEntryTypes extends Plugin
         parent::init();
         self::$plugin = $this;
 
-        $this->controllerNamespace = '\unionco\relatedentrytypes\controllers';
+        Craft::setAlias('@relatedentrytypes', $this->getBasePath());
+
+        $this->controllerNamespace = 'unionco\relatedentrytypes\controllers';
 
         Craft::$app->view->registerTwigExtension(new RelatedEntryTypesTwigExtension());
         

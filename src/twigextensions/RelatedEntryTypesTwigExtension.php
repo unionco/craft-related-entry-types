@@ -52,6 +52,9 @@ class RelatedEntryTypesTwigExtension extends \Twig_Extension
     {
         $entryTypes = [];
         foreach ($sections as $section) {
+            if (!$section) {
+                continue;
+            }
             $entryTypes = array_merge($entryTypes, Craft::$app->getSections()->getEntryTypesBySectionId($section->id));
         }
         return array_map(function ($entryType) {
