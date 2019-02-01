@@ -26,9 +26,6 @@
     <div class="btn add icon dashed">{{ selectionLabel is defined ? selectionLabel : "Choose"|t('app') }}</div>
 </div>
 
-{# {{ dump(entryTypes) }} #}
-{% set sources = 'entryType:936020a9-5514-4d9e-bc82-22075c186179'%}
-{# {{ dump(sources) }} #}
 {% set criteria = criteria ?? [] | merge({
     typeId: entryTypes,
 }) %}

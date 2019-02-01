@@ -146,7 +146,7 @@ class EntryType extends Entries
                 'id' => $id,
                 'namespacedId' => $namespacedId,
                 'sources' => $this->sources,
-                'types' => $this->types,
+                'entryTypes' => $this->entryTypes,
                 'elements' => $value,
             ]
         );
