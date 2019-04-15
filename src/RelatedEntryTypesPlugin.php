@@ -21,18 +21,18 @@ use craft\events\PluginEvent;
 
 use craft\events\RegisterUrlRulesEvent;
 use craft\events\RegisterComponentTypesEvent;
-use unionco\relatedentrytypes\fields\EntryType as EntryTypeField;
+use unionco\relatedentrytypes\fields\RelatedEntryType;
 use unionco\relatedentrytypes\twigextensions\RelatedEntryTypesTwigExtension;
 
 /**
- * Class RelatedEntryTypes
+ * Class RelatedEntryTypesPlugin
  *
  * @author    Abry Rath <abry.rath@union.co>
  * @package   RelatedEntryTypes
  * @since     0.0.1
  *
  */
-class RelatedEntryTypes extends Plugin
+class RelatedEntryTypesPlugin extends Plugin
 {
     // Static Properties
     // =========================================================================
@@ -71,7 +71,7 @@ class RelatedEntryTypes extends Plugin
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
             function (RegisterComponentTypesEvent $event) {
-                $event->types[] = EntryTypeField::class;
+                $event->types[] = RelatedEntryType::class;
             }
         );
 

@@ -19,7 +19,7 @@ use craft\web\assets\cp\CpAsset;
  * @package   RelatedEntryTypes
  * @since     0.0.1
  */
-class EntryTypeFieldAsset extends AssetBundle
+class RelatedEntryTypeFieldAsset extends AssetBundle
 {
     // Public Methods
     // =========================================================================
@@ -29,18 +29,19 @@ class EntryTypeFieldAsset extends AssetBundle
      */
     public function init()
     {
-        $this->sourcePath = "@unionco/relatedentrytypes/assetbundles/entrytypefield/dist";
+        $this->sourcePath = "@unionco/relatedentrytypes/assetbundles/relatedentrytypefield/dist";
 
         $this->depends = [
             CpAsset::class,
         ];
 
         $this->js = [
+            'js/vendor.main.js',
             'js/main.js',
         ];
 
         $this->css = [
-            'css/EntryType.css',
+            'css/main.css',
         ];
 
         parent::init();

@@ -11,30 +11,29 @@
 namespace unionco\relatedentrytypes\fields;
 
 use Craft;
-use yii\db\Schema;
+use craft\base\ElementInterface;
 use craft\base\Field;
-use craft\helpers\Json;
 use craft\elements\Entry;
 use craft\fields\Entries;
-use craft\base\ElementInterface;
-use unionco\relatedentrytypes\models\Sections;
+use craft\helpers\Json;
+use craft\models\EntryType;
+use unionco\relatedentrytypes\assetbundles\entrytypefield\RelatedEntryTypeFieldAsset;
 use unionco\relatedentrytypes\models\EntryTypes;
-use unionco\relatedentrytypes\RelatedEntryTypes;
-use unionco\relatedentrytypes\assetbundles\entrytypefield\EntryTypeFieldAsset;
+use unionco\relatedentrytypes\models\Sections;
 
 /**
  * @author    Abry Rath <abry.rath@union.co>
  * @package   RelatedEntryTypes
  * @since     0.0.1
  */
-class EntryType extends Entries
+class RelatedEntryType extends Entries
 {
     // Public Properties
     // =========================================================================
 
-    public $sections;// = '';
+    public $sections; // = '';
     //public $types;
-    public $entryTypes;// = '';
+    public $entryTypes; // = '';
 
     // Static Methods
     // =========================================================================
@@ -49,7 +48,6 @@ class EntryType extends Entries
 
     // Public Methods
     // =========================================================================
-
 
     public function __construct(array $config = [])
     {
@@ -120,7 +118,7 @@ class EntryType extends Entries
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         // Register our asset bundle
-        Craft::$app->getView()->registerAssetBundle(EntryTypeFieldAsset::class);
+        Craft::$app->getView()->registerAssetBundle(RelatedEntryTypeFieldAsset::class);
 
         // Get our id and namespace
         $id = Craft::$app->getView()->formatInputId($this->handle);
@@ -160,6 +158,55 @@ class EntryType extends Entries
     protected function availableSources(): array
     {
         return Craft::$app->getElementIndexes()->getSources(static::elementType(), 'modal');
+    }
+
+    /**
+     * @return array{sections:array,entryTypes:array}
+     */
+    public function getSectionMap(): array
+    {
+        $allSections = Craft::$app->getSections()->getAllSections();
+        $map = [
+            'sections' => [],
+            'entryTypes' => [],
+        ];
+        $sections = [];
+        $entryTypes = [];
+
+        $singles = [];
+
+        $sectionsService = Craft::$app->getSections();
+        foreach ($allSections as $section) {
+            if ($section->type === 'single') {
+                $singles[] = $section;
+                continue;
+            }
+            $sections[] = [
+                'name' => $section->handle,
+                'uid' => $section->uid,
+                'label' => $section->name,
+            ];
+
+            $entryTypesForSection = $sectionsService->getEntryTypesBySectionId($section->id);
+            $entryTypes = array_merge($entryTypes, array_map(
+                /**
+                 * @param EntryType $entryType
+                 * @return \stdClass
+                 */
+                function ($entryType) use ($section) {
+                    return (object) [
+                        'id' => $entryType->id,
+                        'label' => $entryType->name,
+                        'sectionUid' => $section->uid,
+                    ];
+                },
+                $entryTypesForSection
+            ));
+        }
+        $map['sections'] = $sections;
+        $map['entryTypes'] = $entryTypes;
+
+        return $map;
     }
 
     /**

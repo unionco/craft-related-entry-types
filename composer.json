@@ -34,6 +34,6 @@
         "hasCpSettings": false,
         "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/unionco/related-entry-types/master/CHANGELOG.md",
-        "class": "unionco\\relatedentrytypes\\RelatedEntryTypes"
+        "class": "unionco\\relatedentrytypes\\RelatedEntryTypesPlugin"
     }
 }

@@ -100,11 +100,12 @@ const postcssPlugins = function (loader) {
 
 module.exports = {
     entry: [
-        path.resolve(__dirname, 'assets/js/EntryType.js'),
-        //path.resolve(__dirname, 'assets/scss/app.scss')
+        // path.resolve(__dirname, 'assets/js/app.js'),
+        path.resolve(__dirname, 'resources/js/RelatedEntryTypesField.ts'),
+        path.resolve(__dirname, 'resources/scss/field.scss')
     ],
     output: {
-        path: path.resolve(__dirname, 'src/assetbundles/entrytypefield/dist/'),
+        path: path.resolve(__dirname, 'src/assetbundles/relatedentrytypefield/dist'),
         filename: "js/[name].js",
     },
     mode: 'production',
@@ -161,37 +162,50 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(js|jsx)$/,
+                test: /\.tsx?$/,
+                use: 'ts-loader',
                 exclude: [
                     /node_modules/,
-                    path.resolve(__dirname, 'assets/scss/app.scss')
-                ],
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        cacheDirectory: true,
-                        presets: [
-                            [
-                                '@babel/preset-env',
-                                {
-                                    modules: false,
-                                    targets: {
-                                        browsers: ['> 2%'],
-                                        uglify: true
-                                    }
-                                }
-                            ]
-                        ]
-                    }
-                }
+                    /scss/,
+                    path.resolve(__dirname, 'resources/scss/app.scss')
+                ]
             }
+            //,
+            // {
+            //     test: /\.(js|jsx)$/,
+            //     exclude: [
+            //         /node_modules/,
+            //         path.resolve(__dirname, 'assets/scss/app.scss')
+            //         // path.resolve(__dirname, 'assets/scss/ie.scss')
+            //     ],
+            //     use: {
+            //         loader: "babel-loader",
+            //         options: {
+            //             cacheDirectory: true,
+            //             presets: [
+            //                 [
+            //                     '@babel/preset-env',
+            //                     {
+            //                         modules: false,
+            //                         targets: {
+            //                             browsers: ['> 2%'],
+            //                             uglify: true
+            //                         },
+            //                         useBuiltIns: 'usage'
+            //                     }
+            //                 ]
+            //             ],
+            //             plugins: ['@babel/plugin-transform-async-to-generator']
+            //         }
+            //     }
+            // }
         ]
     },
     plugins: [
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: 'css/app.css',
+            filename: '../css/[name].css',
         }),
         new CopyWebpackPlugin([
             {
@@ -200,5 +214,12 @@ module.exports = {
                 to: ""
             }
         ])
-    ]
+    ],
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js']
+    },
+    output: {
+        filename: 'main.js',
+        path: path.resolve(__dirname, 'src/assetbundles/relatedentrytypefield/dist/js/')
+    }
 };

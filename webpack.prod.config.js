@@ -7,7 +7,6 @@ base.mode = 'production';
 base.optimization.minimize = true;
 base.optimization.splitChunks = {
     chunks: 'all',
-    minSize: 30000,
     name: 'vendor',
 };
 

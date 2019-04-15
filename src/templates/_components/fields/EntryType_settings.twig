@@ -15,7 +15,7 @@
 
 {% import "_includes/forms" as forms %}
 
-{% do view.registerAssetBundle("unionco\\relatedentrytypes\\assetbundles\\entrytypefield\\EntryTypeFieldAsset") %}
+{% do view.registerAssetBundle("unionco\\relatedentrytypes\\assetbundles\\entrytypefield\\RelatedEntryTypeFieldAsset") %}
 
 {% set sourceOptions = field.getSourceOptions() %}
 
@@ -23,24 +23,28 @@
     {% block sourcesField %}
         {% if sourceOptions %}
             {% if field.allowMultipleSources %}
-                {{ forms.checkboxSelectField({
-                    label: "Sources"|t('app'),
-                    instructions: "Which sources do you want to select {type} from?"|t('app', { type: field.displayName()|lower }),
-                    id: 'sources',
-                    name: 'sources',
-                    options: sourceOptions,
-                    values: field.sources,
-                    showAllOption: true,
-                }) }}
+                <div data-related-entry-types-channels="{{ field.getSectionMap() | json_encode }}">
+                    {{ forms.checkboxSelectField({
+                        label: "Sources"|t('app'),
+                        instructions: "Which sources do you want to select {type} from?"|t('app', { type: field.displayName()|lower }),
+                        id: 'sources',
+                        name: 'sources',
+                        options: sourceOptions,
+                        values: field.sources,
+                        showAllOption: true,
+                    }) }}
+                </div>
             {% else %}
-                {{ forms.selectField({
-                    label: "Source"|t('app'),
-                    instructions: "Which source do you want to select {type} from?"|t('app', { type: field.displayName()|lower }),
-                    id: 'source',
-                    name: 'source',
-                    options: sourceOptions,
-                    value: field.source
-                }) }}
+                <div data-related-entry-types-channels="{{ field.getSectionMap() | json_encode }}">
+                    {{ forms.selectField({
+                        label: "Source"|t('app'),
+                        instructions: "Which source do you want to select {type} from?"|t('app', { type: field.displayName()|lower }),
+                        id: 'source',
+                        name: 'source',
+                        options: sourceOptions,
+                        value: field.source
+                    }) }}
+                </div>
             {% endif %}
         {% else %}
             {{ forms.field({
@@ -51,10 +55,10 @@
 
     {% block entryTypesSelectArea %}
         <div data-entry-types-select-area>
-            {% include 'related-entry-types/_partials/EntryType_types' with {
+            {# {% include 'related-entry-types/_partials/EntryType_types' with {
                 sections: selectedSections(field),
                 values: field.entryTypes
-            } only %}
+            } only %} #}
         </div>
     {% endblock %}
 
@@ -110,6 +114,6 @@
     {% endblock %}
 {% endblock %}
 
-{% js %}
-new EntryType();
-{% endjs %}
+{# {% js %}
+new EntryType(); #}
+{# {% endjs %} #}
