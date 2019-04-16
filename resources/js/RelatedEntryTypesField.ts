@@ -65,4 +65,10 @@ export default class RelatedEntryTypesField {
     }
 }
 
+declare global {
+    interface Window {
+        RelatedEntryTypesField: any;
+    }
+}
+
 window.RelatedEntryTypesField = RelatedEntryTypesField;
