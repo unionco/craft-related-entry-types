@@ -17,7 +17,7 @@ export default class EntryType implements IEntryType {
 
     public toHtml(): string {
         return `<div>
-            <input type="checkbox" name="entryTypes" class="checkbox" value="${this.id}" id="entryType-${this.id}" ${this.active ? 'checked' : '' }/>
+            <input type="checkbox" name="types[unionco\\relatedentrytypes\\fields\\RelatedEntryType][entryTypes][]" class="checkbox" value="${this.id}" id="entryType-${this.id}" ${this.active ? 'checked' : '' }/>
             <label for="entryType-${this.id}">${this.label}</label>
         </div>`;
     }

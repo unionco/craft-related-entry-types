@@ -38,7 +38,7 @@ class RelatedEntryTypesPlugin extends Plugin
     // =========================================================================
 
     /**
-     * @var RelatedEntryTypes
+     * @var RelatedEntryTypesPlugin
      */
     public static $plugin;
 
@@ -55,6 +55,7 @@ class RelatedEntryTypesPlugin extends Plugin
 
     /**
      * @inheritdoc
+     * @return void
      */
     public function init()
     {
@@ -70,6 +71,9 @@ class RelatedEntryTypesPlugin extends Plugin
         Event::on(
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
+            /**
+             * @return void
+             */
             function (RegisterComponentTypesEvent $event) {
                 $event->types[] = RelatedEntryType::class;
             }
@@ -78,19 +82,25 @@ class RelatedEntryTypesPlugin extends Plugin
         Event::on(
             Plugins::class,
             Plugins::EVENT_AFTER_INSTALL_PLUGIN,
+            /**
+             * @return void
+             */
             function (PluginEvent $event) {
                 if ($event->plugin === $this) {
                 }
             }
         );
 
-        Event::on(
-            UrlManager::class,
-            UrlManager::EVENT_REGISTER_CP_URL_RULES,
-            function (RegisterUrlRulesEvent $event) {
-                $event->rules['related-entry-types/types'] = 'related-entry-types/default/types';
-            }
-        );
+        // Event::on(
+        //     UrlManager::class,
+        //     UrlManager::EVENT_REGISTER_CP_URL_RULES,
+        //     /**
+        //      * @return void
+        //      */
+        //     function (RegisterUrlRulesEvent $event) {
+        //         $event->rules['related-entry-types/types'] = 'related-entry-types/default/types';
+        //     }
+        // );
 
         Craft::info(
             Craft::t(
@@ -104,5 +114,4 @@ class RelatedEntryTypesPlugin extends Plugin
 
     // Protected Methods
     // =========================================================================
-
 }

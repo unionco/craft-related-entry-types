@@ -219,7 +219,17 @@ class RelatedEntryType extends Entries
 
     public function getSourceOptions(): array
     {
-        return parent::getSourceOptions();
+        return array_filter(
+            parent::getSourceOptions(),
+            /**
+             * Remove singles from the available source options
+             * @param array{label:string,value:string} $option
+             * @return bool
+             **/
+            function ($option) {
+                return $option['value'] !== 'singles';
+            }
+        );
     }
 
     public function beforeSave(bool $isNew): bool

@@ -21,7 +21,6 @@ export default class SectionMap implements ISectionMap {
             return [];
         }
         const matchingUid: IEntryType[] = this.entryTypes.filter((entryType: IEntryType) => {
-            console.log(entryType.sectionUid, uid);
             return entryType.sectionUid === uid;
         });
         if (matchingUid && matchingUid.length) {
@@ -35,7 +34,6 @@ export default class SectionMap implements ISectionMap {
         const entryTypes: IEntryType[] = [];
         uids.forEach((uid: string) => {
             this.getEntryTypesBySectionUid(uid).forEach((entryType: IEntryType) => {
-                console.log(entryType);
                 entryTypes.push(entryType);
             });
         });

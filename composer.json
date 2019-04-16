@@ -35,5 +35,9 @@
         "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/unionco/related-entry-types/master/CHANGELOG.md",
         "class": "unionco\\relatedentrytypes\\RelatedEntryTypesPlugin"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.4",
+        "vimeo/psalm": "^3.2"
     }
 }
