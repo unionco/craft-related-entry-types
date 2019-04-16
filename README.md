@@ -24,15 +24,18 @@ To install the plugin, follow these instructions.
 
 ## Related Entry Types Overview
 
--Insert text here-
+This plugin extends the default Craft CMS Entries field, but restricts the Entry Types the user can select. 
 
 ## Configuring Related Entry Types
 
--Insert text here-
+Each field has its own settings, just like the Craft CMS Entries field.
+
+![Settings](resources/img/settings-screenshot.png)
+
 
 ## Using Related Entry Types
 
--Insert text here-
+Use this plugin in Twig and PHP just like you would use the Craft CMS Entries field.
 
 ## Related Entry Types Roadmap
 
@@ -40,4 +43,4 @@ Some things to do, and ideas for potential features:
 
 * Release it
 
-Brought to you by [Abry Rath <abry.rath@union.co>](https://github.com/unionco)
+Brought to you by [UNION <abry.rath@union.co>](https://github.com/unionco)
