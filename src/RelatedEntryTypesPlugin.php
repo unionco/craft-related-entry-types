@@ -21,7 +21,7 @@ use craft\events\PluginEvent;
 
 use craft\events\RegisterUrlRulesEvent;
 use craft\events\RegisterComponentTypesEvent;
-use unionco\relatedentrytypes\fields\RelatedEntryType;
+use unionco\relatedentrytypes\fields\RelatedEntryTypesField;
 use unionco\relatedentrytypes\twigextensions\RelatedEntryTypesTwigExtension;
 
 /**
@@ -75,7 +75,7 @@ class RelatedEntryTypesPlugin extends Plugin
              * @return void
              */
             function (RegisterComponentTypesEvent $event) {
-                $event->types[] = RelatedEntryType::class;
+                $event->types[] = RelatedEntryTypesField::class;
             }
         );
 

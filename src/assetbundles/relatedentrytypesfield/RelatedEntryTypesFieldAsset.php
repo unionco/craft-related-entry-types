@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2019 Abry Rath <abry.rath@union.co>
  */
 
-namespace unionco\relatedentrytypes\assetbundles\entrytypefield;
+namespace unionco\relatedentrytypes\assetbundles\relatedentrytypesfield;
 
 use Craft;
 use craft\web\AssetBundle;
@@ -19,7 +19,7 @@ use craft\web\assets\cp\CpAsset;
  * @package   RelatedEntryTypes
  * @since     0.0.1
  */
-class RelatedEntryTypeFieldAsset extends AssetBundle
+class RelatedEntryTypesFieldAsset extends AssetBundle
 {
     // Public Methods
     // =========================================================================
@@ -30,7 +30,7 @@ class RelatedEntryTypeFieldAsset extends AssetBundle
      */
     public function init()
     {
-        $this->sourcePath = "@unionco/relatedentrytypes/assetbundles/relatedentrytypefield/dist";
+        $this->sourcePath = "@unionco/relatedentrytypes/assetbundles/relatedentrytypesfield/dist";
 
         $this->depends = [
             CpAsset::class,

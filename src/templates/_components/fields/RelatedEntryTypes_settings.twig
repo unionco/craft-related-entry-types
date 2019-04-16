@@ -15,7 +15,7 @@
 
 {% import "_includes/forms" as forms %}
 
-{% do view.registerAssetBundle("unionco\\relatedentrytypes\\assetbundles\\entrytypefield\\RelatedEntryTypeFieldAsset") %}
+{% do view.registerAssetBundle("unionco\\relatedentrytypes\\assetbundles\\relatedentrytypesfield\\RelatedEntryTypesFieldAsset") %}
 
 {% set sourceOptions = field.getSourceOptions() %}
 
@@ -54,11 +54,8 @@
     {% endblock %}
 
     {% block entryTypesSelectArea %}
-        <div data-entry-types-select-area>
-            {# {% include 'related-entry-types/_partials/EntryType_types' with {
-                sections: selectedSections(field),
-                values: field.entryTypes
-            } only %} #}
+        <div data-related-entry-types-select-area>
+            
         </div>
     {% endblock %}
 
@@ -114,6 +111,6 @@
     {% endblock %}
 {% endblock %}
 
-{# {% js %}
-new EntryType(); #}
-{# {% endjs %} #}
+{% js %}
+new RelatedEntryTypesField();
+{% endjs %}

@@ -11,29 +11,35 @@
 namespace unionco\relatedentrytypes\fields;
 
 use Craft;
-use craft\base\ElementInterface;
 use craft\base\Field;
+use craft\helpers\Json;
 use craft\elements\Entry;
 use craft\fields\Entries;
-use craft\helpers\Json;
 use craft\models\EntryType;
-use unionco\relatedentrytypes\assetbundles\entrytypefield\RelatedEntryTypeFieldAsset;
-use unionco\relatedentrytypes\models\EntryTypes;
+use craft\base\ElementInterface;
 use unionco\relatedentrytypes\models\Sections;
+use unionco\relatedentrytypes\models\EntryTypes;
+use unionco\relatedentrytypes\assetbundles\relatedentrytypesfield\RelatedEntryTypesFieldAsset;
 
 /**
  * @author    Abry Rath <abry.rath@union.co>
  * @package   RelatedEntryTypes
  * @since     0.0.1
  */
-class RelatedEntryType extends Entries
+class RelatedEntryTypesField extends Entries
 {
     // Public Properties
     // =========================================================================
 
-    public $sections; // = '';
-    //public $types;
-    public $entryTypes; // = '';
+    /**
+     * @var array $sections
+     */
+    public $sections;
+
+    /**
+     * @var array $entryTypes;
+     */
+    public $entryTypes;
 
     // Static Methods
     // =========================================================================
@@ -43,7 +49,7 @@ class RelatedEntryType extends Entries
      */
     public static function displayName(): string
     {
-        return Craft::t('related-entry-types', 'EntryType');
+        return Craft::t('related-entry-types', 'Related Entry Types');
     }
 
     // Public Methods
@@ -54,6 +60,10 @@ class RelatedEntryType extends Entries
         parent::__construct($config);
     }
 
+    /**
+     * @inheritdoc
+     * @return void
+     */
     public function init()
     {
         parent::init();
@@ -61,29 +71,18 @@ class RelatedEntryType extends Entries
 
     /**
      * @inheritdoc
+     * @return array
      */
     public function rules()
     {
         $rules = parent::rules();
-        // $rules = array_merge($rules, [
-        //     ['sections', Sections::class],
-        //     ['entryTypes', EntryTypes::class],
-        //     ['sections', 'default', 'value' => new Sections()],
-        //     ['entryTypes', 'default', 'value' => new EntryTypes()],
-        // ]);
+
         return $rules;
     }
 
-    // /**
-    //  * @inheritdoc
-    //  */
-    // public function getContentColumnType(): string
-    // {
-    //     return Schema::TYPE_STRING;
-    // }
-
     /**
      * @inheritdoc
+     * @return mixed
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
@@ -92,6 +91,7 @@ class RelatedEntryType extends Entries
 
     /**
      * @inheritdoc
+     * @return mixed
      */
     public function serializeValue($value, ElementInterface $element = null)
     {
@@ -100,12 +100,13 @@ class RelatedEntryType extends Entries
 
     /**
      * @inheritdoc
+     * @return null|string
      */
     public function getSettingsHtml()
     {
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
-            'related-entry-types/_components/fields/EntryType_settings',
+            'related-entry-types/_components/fields/RelatedEntryTypes_settings',
             [
                 'field' => $this,
             ]
@@ -118,7 +119,7 @@ class RelatedEntryType extends Entries
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         // Register our asset bundle
-        Craft::$app->getView()->registerAssetBundle(RelatedEntryTypeFieldAsset::class);
+        Craft::$app->getView()->registerAssetBundle(RelatedEntryTypesFieldAsset::class);
 
         // Get our id and namespace
         $id = Craft::$app->getView()->formatInputId($this->handle);
@@ -132,11 +133,11 @@ class RelatedEntryType extends Entries
             'prefix' => Craft::$app->getView()->namespaceInputId(''),
         ];
         $jsonVars = Json::encode($jsonVars);
-        Craft::$app->getView()->registerJs("$('#{$namespacedId}-field').RelatedEntryTypes(" . $jsonVars . ");");
+        Craft::$app->getView()->registerJs("$('#{$namespacedId}-field').RelatedEntryTypesField(" . $jsonVars . ");");
 
         // Render the input template
         return Craft::$app->getView()->renderTemplate(
-            'related-entry-types/_components/fields/EntryType_input',
+            'related-entry-types/_components/fields/RelatedEntryTypes_input',
             [
                 'name' => $this->handle,
                 'value' => $value,
@@ -187,7 +188,11 @@ class RelatedEntryType extends Entries
                 'label' => $section->name,
             ];
 
-            $entryTypesForSection = $sectionsService->getEntryTypesBySectionId($section->id);
+            $sectionId = $section->id;
+            if (!$sectionId) {
+                throw new \Exception('Invalid section selected');
+            }
+            $entryTypesForSection = $sectionsService->getEntryTypesBySectionId($sectionId);
             $entryTypes = array_merge($entryTypes, array_map(
                 /**
                  * @param EntryType $entryType
@@ -198,6 +203,7 @@ class RelatedEntryType extends Entries
                         'id' => $entryType->id,
                         'label' => $entryType->name,
                         'sectionUid' => $section->uid,
+                        'active' => in_array($entryType->id, $this->entryTypes ?? []),
                     ];
                 },
                 $entryTypesForSection

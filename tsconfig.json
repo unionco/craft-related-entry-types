@@ -2,7 +2,7 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": { "*": ["types/*"] },
-        "outDir": "./src/assetbundles/relatedentrytypefield/dist/js/",
+        "outDir": "src/assetbundles/relatedentrytypesfield/dist/js",
         "noImplicitAny": true,
         "module": "es6",
         "target": "es5",

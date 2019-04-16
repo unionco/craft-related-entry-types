@@ -3,10 +3,12 @@
 namespace unionco\relatedentrytypes\twigextensions;
 
 use Craft;
+use craft\models\Section;
+use Twig\Extension\AbstractExtension;
 use unionco\relatedentrytypes\RelatedEntryTypesPlugin;
+use unionco\relatedentrytypes\fields\RelatedEntryTypesField;
 
-
-class RelatedEntryTypesTwigExtension extends \Twig_Extension
+class RelatedEntryTypesTwigExtension extends AbstractExtension
 {
     public function __construct()
     {
@@ -32,20 +34,30 @@ class RelatedEntryTypesTwigExtension extends \Twig_Extension
         ];
     }
 
+    /**
+     * @param RelatedEntryTypesField $field
+     */
     public function selectedSections($field): array
     {
         $sources = $field->sources;
         if ($sources == '*') {
             return Craft::$app->getSections()->getAllSections();
         }
-        return array_map(function ($source) {
-            $exploded = explode(':', $source);
-            switch ($exploded[0]) {
-                case 'section':
-                    return Craft::$app->getSections()->getSectionByUid($exploded[1]);
-                    break;
-            }
-        }, $sources);
+        return array_map(
+            /**
+             * @param string $source
+             * @return null|Section
+             **/
+            function ($source) {
+                $exploded = explode(':', $source);
+                switch ($exploded[0]) {
+                    case 'section':
+                        return Craft::$app->getSections()->getSectionByUid($exploded[1]);
+                        break;
+                }
+            },
+            $sources
+        );
     }
 
     public function entryTypes(array $sections): array
