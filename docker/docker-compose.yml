@@ -1,5 +1,5 @@
 web:
-  build: ./web
+  image: abryrath/craft
   ports: 
     - "8080:80"
   links:
