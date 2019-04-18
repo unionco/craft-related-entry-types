@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/unionco/related-entry-types.svg?branch=master)](https://travis-ci.com/unionco/related-entry-types)
+
 # Related Entry Types plugin for Craft CMS 3.x
 
 A Craft Field type that allows more control over related entries.
