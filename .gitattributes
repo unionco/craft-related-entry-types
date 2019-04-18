@@ -1,0 +1,7 @@
+tests/ export-ignore
+docker/ export-ignore
+webpack.* export-ignore
+yarn.lock export-ignore
+psalm.xml export-ignore
+ts* export-ignore
+resources/ export-ignore
