@@ -2,4 +2,4 @@ services:
   - docker
 
 script:
-  - cd docker && docker-compose run web bash -c 'cd /var/www/ && composer install && php vendor/bin/codecept run'
+  - cd docker && docker-compose run web bash -c 'cd /var/www/plugin && yarn install && yarn run production && cd /var/www && composer install && php vendor/bin/codecept run'
