@@ -33,7 +33,6 @@ export default class ChannelGroup implements IChannelGroup {
             return channel.active;
         });
 
-        console.log('getActiveChannels', activeChannels);
         return activeChannels;
     }
 }

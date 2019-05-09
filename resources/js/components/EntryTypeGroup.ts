@@ -10,7 +10,6 @@ export default class EntryTypeGroup implements IEntryTypeGroup {
     }
 
     public render(): void {
-        console.log('render');
         let entryTypes = '';
         if (this.entryTypes.length) {
             entryTypes = this.entryTypes

@@ -45,7 +45,5 @@
 } %}
 
 {% js %}
-    console.log('hello');
-    console.log(jsClass);
     new {{ jsClass }}({{ jsSettings|json_encode|raw }});
 {% endjs %}
