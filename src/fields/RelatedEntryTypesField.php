@@ -11,15 +11,15 @@
 namespace unionco\relatedentrytypes\fields;
 
 use Craft;
+use craft\base\ElementInterface;
 use craft\base\Field;
-use craft\helpers\Json;
 use craft\elements\Entry;
 use craft\fields\Entries;
+use craft\helpers\Json;
 use craft\models\EntryType;
-use craft\base\ElementInterface;
-use unionco\relatedentrytypes\models\Sections;
-use unionco\relatedentrytypes\models\EntryTypes;
 use unionco\relatedentrytypes\assetbundles\relatedentrytypesfield\RelatedEntryTypesFieldAsset;
+use unionco\relatedentrytypes\models\EntryTypes;
+use unionco\relatedentrytypes\models\Sections;
 
 /**
  * @author    Abry Rath <abry.rath@union.co>
@@ -104,11 +104,26 @@ class RelatedEntryTypesField extends Entries
      */
     public function getSettingsHtml()
     {
+        // Get our id and namespace
+        $handle = $this->handle ?? 'related_entry_types';
+        $id = Craft::$app->getView()->formatInputId($handle);
+        $namespacedId = Craft::$app->getView()->namespaceInputId($id);
+        $prefix = Craft::$app->getView()->namespaceInputId('');
+        $jsonVars = [
+            'id' => $id,
+            'name' => $this->handle,
+            'namespace' => $namespacedId,
+            'prefix' => $prefix,
+        ];
+
+        $jsonVars = Json::encode($jsonVars);
+        Craft::$app->getView()->registerJs("new RelatedEntryTypesField(" . $jsonVars . ");");
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
             'related-entry-types/_components/fields/RelatedEntryTypes_settings',
             [
                 'field' => $this,
+                'prefix' => $prefix,
             ]
         );
     }
@@ -133,7 +148,7 @@ class RelatedEntryTypesField extends Entries
             'prefix' => Craft::$app->getView()->namespaceInputId(''),
         ];
         $jsonVars = Json::encode($jsonVars);
-        Craft::$app->getView()->registerJs("$('#{$namespacedId}-field').RelatedEntryTypesField(" . $jsonVars . ");");
+        Craft::$app->getView()->registerJs("new RelatedEntryTypesField(" . $jsonVars . ");");
 
         // Render the input template
         return Craft::$app->getView()->renderTemplate(

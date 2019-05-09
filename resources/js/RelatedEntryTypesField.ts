@@ -12,13 +12,19 @@ export default class RelatedEntryTypesField {
     public entryTypeGroup: IEntryTypeGroup;
     private sectionMap: ISectionMap;
     public activeSections: IChannel[];
+    public namespacedId: string;
 
-    constructor() {
+    constructor(jsonVars: any) {
+        console.log(jsonVars);
+        this.namespacedId = jsonVars.namespace;
+        const { prefix } = jsonVars;
         this.activeSections = [];
-        this.fieldContainer = document.querySelector('#unionco-relatedentrytypes-fields-RelatedEntryTypesField');
-
+        // this.fieldContainer = document.querySelector(`#${jsonVars.id}`);
+        // console.log(this.fieldContainer);
         // Initialize the channels select area
-        const channelGroupContainer: HTMLDivElement = this.fieldContainer.querySelector('[data-related-entry-types-channels]');
+        const channelGroupContainer: HTMLDivElement = document.querySelector(`#${prefix}${prefix}channels`);
+        console.log(channelGroupContainer);
+
         if (channelGroupContainer) {
             this.channelGroup = new ChannelGroup(channelGroupContainer);
             this.activeSections = this.channelGroup.getActiveChannels();
@@ -27,7 +33,7 @@ export default class RelatedEntryTypesField {
             this.sectionMap = new SectionMap(sectionMapData.sections, sectionMapData.entryTypes);
         }
 
-        const entryTypesGroupContainer: HTMLDivElement = this.fieldContainer.querySelector('[data-related-entry-types-select-area]');
+        const entryTypesGroupContainer: HTMLDivElement = document.querySelector(`#${prefix}${prefix}select`);
 
         if (entryTypesGroupContainer) {
             this.entryTypeGroup = new EntryTypeGroup(entryTypesGroupContainer);
@@ -40,12 +46,14 @@ export default class RelatedEntryTypesField {
         this.updateActiveSections = this.updateActiveSections.bind(this);
 
         // Event Listeners
-        this.fieldContainer.addEventListener('channelChange', (e: CustomEvent) => {
+        channelGroupContainer.parentElement.addEventListener('channelChange', (e: CustomEvent) => {
             const eventDetail = e.detail;
             const { all, active } = eventDetail;
             console.log(eventDetail);
             this.updateActiveSections(all, active); // sectionUid, active);
         });
+
+        console.log(this);
     }
 
     public updateActiveSections(all: boolean, active: boolean) {

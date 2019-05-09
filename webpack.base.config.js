@@ -105,7 +105,7 @@ module.exports = {
         path.resolve(__dirname, 'resources/scss/field.scss')
     ],
     output: {
-        path: path.resolve(__dirname, 'src/assetbundles/relatedentrytypefield/dist'),
+        path: path.resolve(__dirname, 'src/assetbundles/relatedentrytypesfield/dist'),
         filename: "js/[name].js",
     },
     mode: 'production',
@@ -220,6 +220,6 @@ module.exports = {
     },
     output: {
         filename: 'main.js',
-        path: path.resolve(__dirname, 'src/assetbundles/relatedentrytypefield/dist/js/')
+        path: path.resolve(__dirname, 'src/assetbundles/relatedentrytypesfield/dist/js/')
     }
 };

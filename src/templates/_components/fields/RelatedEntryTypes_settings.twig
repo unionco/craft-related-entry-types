@@ -23,7 +23,7 @@
     {% block sourcesField %}
         {% if sourceOptions %}
             {% if field.allowMultipleSources %}
-                <div data-related-entry-types-channels="{{ field.getSectionMap() | json_encode }}">
+                <div data-related-entry-types-channels="{{ field.getSectionMap() | json_encode }}" id="{{ prefix ~ 'channels' }}">
                     {{ forms.checkboxSelectField({
                         label: "Sources"|t('app'),
                         instructions: "Which sources do you want to select {type} from?"|t('app', { type: field.displayName()|lower }),
@@ -35,7 +35,7 @@
                     }) }}
                 </div>
             {% else %}
-                <div data-related-entry-types-channels="{{ field.getSectionMap() | json_encode }}">
+                <div data-related-entry-types-channels="{{ field.getSectionMap() | json_encode }}" id="{{ prefix ~ 'channels' }}">
                     {{ forms.selectField({
                         label: "Source"|t('app'),
                         instructions: "Which source do you want to select {type} from?"|t('app', { type: field.displayName()|lower }),
@@ -54,7 +54,7 @@
     {% endblock %}
 
     {% block entryTypesSelectArea %}
-        <div data-related-entry-types-select-area>
+        <div data-related-entry-types-select-area id="{{ prefix ~ 'select' }}">
             
         </div>
     {% endblock %}
@@ -111,6 +111,6 @@
     {% endblock %}
 {% endblock %}
 
-{% js %}
-new RelatedEntryTypesField();
-{% endjs %}
+{# {% js %}
+new RelatedEntryTypesField(); #}
+{# {% endjs %} #}
