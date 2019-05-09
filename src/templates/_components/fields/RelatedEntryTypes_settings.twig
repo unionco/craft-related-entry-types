@@ -24,6 +24,7 @@
         {% if sourceOptions %}
             {% if field.allowMultipleSources %}
                 <div data-related-entry-types-channels="{{ field.getSectionMap() | json_encode }}" id="{{ prefix ~ 'channels' }}">
+                    {# <input type="hidden" name="types[unionco\relatedentrytypes\fields\RelatedEntryTypesField][sources]" values="{{ field.sources }}"/> #}
                     {{ forms.checkboxSelectField({
                         label: "Sources"|t('app'),
                         instructions: "Which sources do you want to select {type} from?"|t('app', { type: field.displayName()|lower }),
@@ -54,8 +55,21 @@
     {% endblock %}
 
     {% block entryTypesSelectArea %}
-        <div data-related-entry-types-select-area id="{{ prefix ~ 'select' }}">
-            
+    <hr/>
+        <div class="field" data-related-entry-types-select-area id="{{ prefix ~ 'select' }}">
+            <div class="heading">
+                <label>Entry Types</label>
+            </div>
+            <div class="input" style="margin-top: 22px;">
+                {% for entryType in field.getSectionMap().entryTypes %}
+                    {{ forms.checkboxField({
+                        name: 'entryTypes[]',
+                        value: entryType.id,
+                        label: entryType.label,
+                        checked: entryType.active
+                    }) }}
+                {% endfor %}
+            </div>
         </div>
     {% endblock %}
 

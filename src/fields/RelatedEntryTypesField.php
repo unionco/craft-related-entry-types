@@ -255,11 +255,6 @@ class RelatedEntryTypesField extends Entries
 
     public function beforeSave(bool $isNew): bool
     {
-        $request = Craft::$app->request->getBodyParams();
-        $this->sections = array_values($request['types'][self::class]['sources']);
-        $entryTypes = $request['entryTypes'] ?? $request['types'][self::class]['entryTypes'];
-        $this->entryTypes = array_values($entryTypes);
-
         return parent::beforeSave($isNew);
     }
 }

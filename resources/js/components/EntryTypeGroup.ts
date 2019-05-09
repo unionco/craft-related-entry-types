@@ -10,24 +10,22 @@ export default class EntryTypeGroup implements IEntryTypeGroup {
     }
 
     public render(): void {
-        let entryTypes = '';
-        if (this.entryTypes.length) {
-            entryTypes = this.entryTypes
-                .map((entryType: IEntryType) => entryType.toHtml())
-                .reduce((prev: string, current: string) => prev + current);
-        }
-        
-        this.node.innerHTML = `
-        <div class="field">
-            <div class="heading">
-                <label>EntryTypes</label>
-            </div>
-            <div class="input ltr">
-                <div class="checkbox-select">
-                    ${entryTypes}
-                </div>
-            </div>
-        </div>`;
+        console.log(this.entryTypes);
+        const fields = this.node.querySelectorAll('.field.checkboxfield');
+        const entryTypeIds: string[] = this.entryTypes.map((entryType: IEntryType) => entryType.id.toString());
+
+        fields.forEach((fieldContainer: HTMLDivElement) => {
+            
+            const checkbox: HTMLInputElement = fieldContainer.querySelector('input[type="checkbox"]');
+            const id: string = checkbox.value;
+
+            if (entryTypeIds.includes(id)) {
+                // show
+                fieldContainer.style.display = 'block';
+            } else {
+                fieldContainer.style.display = 'none';
+            }
+        });
     }
 
     public setEntryTypes(entryTypes: IEntryType[]): void {
