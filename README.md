@@ -4,7 +4,7 @@
 
 A Craft Field type that allows more control over related entries.
 
-![Screenshot](resources/img/plugin-logo.png)
+<img src="resources/img/plugin-logo.svg" width="200" height="200"/>
 
 ## Requirements
 
