@@ -8,70 +8,27 @@
  * @author    Abry Rath <abry.rath@union.co>
  * @copyright Copyright (c) 2019 Abry Rath <abry.rath@union.co>
  * @link      https://github.com/unionco
- * @package   RelatedEntryTypes
+* @package   RelatedEntryTypes
  * @since     0.0.1
  */
 #}
 
 {% import "_includes/forms" as forms %}
 
-{% do view.registerAssetBundle("unionco\\relatedentrytypes\\assetbundles\\relatedentrytypesfield\\RelatedEntryTypesFieldAsset") %}
+{# {% do view.registerAssetBundle("unionco\\relatedentrytypes\\assetbundles\\relatedentrytypesfield\\RelatedEntryTypesFieldAsset") %} #}
+{% do view.registerAssetBundle("unionco\\relatedentrytypes\\assetbundles\\cp\\CpAsset") %}
 
 {% set sourceOptions = field.getSourceOptions() %}
 
 {% block fieldSettings %}
-    {% block sourcesField %}
-        {% if sourceOptions %}
-            {% if field.allowMultipleSources %}
-                <div data-related-entry-types-channels="{{ field.getSectionMap() | json_encode }}" id="{{ prefix ~ 'channels' }}">
-                    {# <input type="hidden" name="types[unionco\relatedentrytypes\fields\RelatedEntryTypesField][sources]" values="{{ field.sources }}"/> #}
-                    {{ forms.checkboxSelectField({
-                        label: "Sources"|t('app'),
-                        instructions: "Which sources do you want to select {type} from?"|t('app', { type: field.displayName()|lower }),
-                        id: 'sources',
-                        name: 'sources',
-                        options: sourceOptions,
-                        values: field.sources,
-                        showAllOption: true,
-                    }) }}
-                </div>
-            {% else %}
-                <div data-related-entry-types-channels="{{ field.getSectionMap() | json_encode }}" id="{{ prefix ~ 'channels' }}">
-                    {{ forms.selectField({
-                        label: "Source"|t('app'),
-                        instructions: "Which source do you want to select {type} from?"|t('app', { type: field.displayName()|lower }),
-                        id: 'source',
-                        name: 'source',
-                        options: sourceOptions,
-                        value: field.source
-                    }) }}
-                </div>
-            {% endif %}
-        {% else %}
-            {{ forms.field({
-                label: (field.allowMultipleSources ? "Sources"|t('app') : "Source"|t('app'))
-            }, '<p class="error">' ~ "No sources exist yet."|t('app') ~ '</p>') }}
-        {% endif %}
-    {% endblock %}
-
-    {% block entryTypesSelectArea %}
-    <hr/>
-        <div class="field" data-related-entry-types-select-area id="{{ prefix ~ 'select' }}">
-            <div class="heading">
-                <label>Entry Types</label>
-            </div>
-            <div class="input" style="margin-top: 22px;">
-                {% for entryType in field.getSectionMap().entryTypes %}
-                    {{ forms.checkboxField({
-                        name: 'entryTypes[]',
-                        value: entryType.id,
-                        label: entryType.label,
-                        checked: entryType.active
-                    }) }}
-                {% endfor %}
-            </div>
+    <div id="vue-root">
+        <div style="display: none;" data-vue-field-prefix>
+            {{ forms.textField({
+                name: 'test'
+            })}}
         </div>
-    {% endblock %}
+        <ret-settings source-options-json="{{ sourceOptions | json_encode }}" section-map-json="{{ field.getSectionMap() | json_encode }}"></ret-settings>
+    </div>
 
     {% block limitField %}
         {% if field.allowLimit %}
@@ -125,6 +82,6 @@
     {% endblock %}
 {% endblock %}
 
-{# {% js %}
-new RelatedEntryTypesField(); #}
-{# {% endjs %} #}
+{% js %}
+new Vue({el: '#{{ prefix }}vue-root'});
+{% endjs %}

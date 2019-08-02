@@ -117,7 +117,7 @@ class RelatedEntryTypesField extends Entries
         ];
 
         $jsonVars = Json::encode($jsonVars);
-        Craft::$app->getView()->registerJs("new RelatedEntryTypesField(" . $jsonVars . ");");
+        // Craft::$app->getView()->registerJs("new RelatedEntryTypesField(" . $jsonVars . ");");
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
             'related-entry-types/_components/fields/RelatedEntryTypes_settings',
@@ -148,7 +148,7 @@ class RelatedEntryTypesField extends Entries
             'prefix' => Craft::$app->getView()->namespaceInputId(''),
         ];
         $jsonVars = Json::encode($jsonVars);
-        Craft::$app->getView()->registerJs("new RelatedEntryTypesField(" . $jsonVars . ");");
+        // Craft::$app->getView()->registerJs("new RelatedEntryTypesField(" . $jsonVars . ");");
 
         // Render the input template
         return Craft::$app->getView()->renderTemplate(
