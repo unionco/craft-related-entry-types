@@ -117,7 +117,6 @@ class RelatedEntryTypesField extends Entries
         ];
 
         $jsonVars = Json::encode($jsonVars);
-        // Craft::$app->getView()->registerJs("new RelatedEntryTypesField(" . $jsonVars . ");");
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
             'related-entry-types/_components/fields/RelatedEntryTypes_settings',
@@ -133,9 +132,6 @@ class RelatedEntryTypesField extends Entries
      */
     public function getInputHtml($value, ElementInterface $element = null): string
     {
-        // Register our asset bundle
-        // Craft::$app->getView()->registerAssetBundle(RelatedEntryTypesFieldAsset::class);
-
         // Get our id and namespace
         $id = Craft::$app->getView()->formatInputId($this->handle);
         $namespacedId = Craft::$app->getView()->namespaceInputId($id);
@@ -148,7 +144,6 @@ class RelatedEntryTypesField extends Entries
             'prefix' => Craft::$app->getView()->namespaceInputId(''),
         ];
         $jsonVars = Json::encode($jsonVars);
-        // Craft::$app->getView()->registerJs("new RelatedEntryTypesField(" . $jsonVars . ");");
 
         // Render the input template
         return Craft::$app->getView()->renderTemplate(
