@@ -134,7 +134,7 @@ class RelatedEntryTypesField extends Entries
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         // Register our asset bundle
-        Craft::$app->getView()->registerAssetBundle(RelatedEntryTypesFieldAsset::class);
+        // Craft::$app->getView()->registerAssetBundle(RelatedEntryTypesFieldAsset::class);
 
         // Get our id and namespace
         $id = Craft::$app->getView()->formatInputId($this->handle);

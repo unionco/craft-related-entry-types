@@ -19,17 +19,15 @@
 {% do view.registerAssetBundle("unionco\\relatedentrytypes\\assetbundles\\cp\\CpAsset") %}
 
 {% set sourceOptions = field.getSourceOptions() %}
+{% set uid = field.uid|default('new') %}
     {% block fieldSettings %}
-    {# {{ field.handle }} #}
-    UID:
-    {{ field.uid }}
-        <div id="vue-root"> <div data-vue-field-prefix="{{ field.uid }}">
+        <div id="vue-root"> <div data-vue-field-prefix="{{ uid }}">
             {{ forms.textField({
                 name: 'test',
                 disabled: true,
             }) }}
         </div>
-        <ret-settings field-uid="{{ field.uid }}" section-options-json="{{ sourceOptions | json_encode }}" section-map-json="{{ field.getSectionMap() | json_encode }}" selected-sections-json="{{ (field.sections|default('[]'))|json_encode }}" selected-entry-types-json="{{ (field.entryTypes|default('[]'))|json_encode }}"/>
+        <ret-settings field-uid-default="{{ uid }}" section-options-json="{{ sourceOptions | json_encode }}" section-map-json="{{ field.getSectionMap() | json_encode }}" selected-sections-json="{{ (field.sections|default([]))|json_encode }}" selected-entry-types-json="{{ (field.entryTypes|default([]))|json_encode }}"/>
     </div>
 
     {% block limitField %}
