@@ -1,48 +1,11 @@
-[![Build Status](https://travis-ci.com/unionco/related-entry-types.svg?branch=master)](https://travis-ci.com/unionco/related-entry-types)
+# Craft SyncDB
 
-# Related Entry Types plugin for Craft CMS 3.x
+## Overview
 
-A Craft Field type that allows more control over related entries.
+Craft 3 field type that allows more control over related entries. It extends the default Entries relationship field, but restricts the sections and entry types that can be related.
 
-<img src="resources/img/plugin-logo.svg" width="200" height="200"/>
+<img src="src/icon.svg" height="200px" width="200px"/>
 
-## Requirements
+## Documentation
 
-This plugin requires Craft CMS 3.0.0-beta.23 or later.
-
-## Installation
-
-To install the plugin, follow these instructions.
-
-1. Open your terminal and go to your Craft project:
-
-        cd /path/to/project
-
-2. Then tell Composer to load the plugin:
-
-        composer require unionco/related-entry-types
-
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Related Entry Types.
-
-## Related Entry Types Overview
-
-This plugin extends the default Craft CMS Entries field, but restricts the Entry Types the user can select. 
-
-## Configuring Related Entry Types
-
-Each field has its own settings, just like the Craft CMS Entries field.
-
-![Settings](resources/img/settings-screenshot.png)
-
-
-## Using Related Entry Types
-
-Use this plugin in Twig and PHP just like you would use the Craft CMS Entries field.
-
-## Related Entry Types Roadmap
-
-Some things to do, and ideas for potential features:
-
-* Release it
-
-Brought to you by [UNION <abry.rath@union.co>](https://github.com/unionco)
+View the [docs online](https://unionco.github.io/craft-plugin-docs/craft-related-entry-types/)
