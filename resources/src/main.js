@@ -1,4 +1,7 @@
 import RelatedEntryTypesFieldSettings from './components/RelatedEntryTypesFieldSettings';
+// import Store from './store/store';
+
+// window.Vue.prototype.$store = new Store();
 
 const VueSimpleMapPlugin = {
     install(Vue) {

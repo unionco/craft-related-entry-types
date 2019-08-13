@@ -19,15 +19,17 @@
 {% do view.registerAssetBundle("unionco\\relatedentrytypes\\assetbundles\\cp\\CpAsset") %}
 
 {% set sourceOptions = field.getSourceOptions() %}
-
-{% block fieldSettings %}
-    <div id="vue-root">
-        <div style="display: none;" data-vue-field-prefix>
+    {% block fieldSettings %}
+    {# {{ field.handle }} #}
+    UID:
+    {{ field.uid }}
+        <div id="vue-root"> <div data-vue-field-prefix="{{ field.uid }}">
             {{ forms.textField({
-                name: 'test'
-            })}}
+                name: 'test',
+                disabled: true,
+            }) }}
         </div>
-        <ret-settings source-options-json="{{ sourceOptions | json_encode }}" section-map-json="{{ field.getSectionMap() | json_encode }}"></ret-settings>
+        <ret-settings field-uid="{{ field.uid }}" section-options-json="{{ sourceOptions | json_encode }}" section-map-json="{{ field.getSectionMap() | json_encode }}" selected-sections-json="{{ (field.sections|default('[]'))|json_encode }}" selected-entry-types-json="{{ (field.entryTypes|default('[]'))|json_encode }}"/>
     </div>
 
     {% block limitField %}
@@ -64,7 +66,7 @@
         {% if craft.app.getIsMultiSite() %}
             <hr>
             <a class="fieldtoggle" data-target="advanced">{{ "Advanced"|t('app') }}</a>
-            <div id="advanced" class="hidden">
+            <div class="hidden" id="advanced">
                 {% block targetSiteField %}
                     {{ field.getTargetSiteFieldHtml()|raw }}
                 {% endblock %}

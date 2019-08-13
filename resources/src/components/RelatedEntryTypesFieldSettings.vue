@@ -1,51 +1,52 @@
 <template>
   <div>
     <div class="field">
-      <!-- <div class="input ltr"> -->
       <div class="heading">
-        <label>Sources</label>
+        <label>Sections</label>
       </div>
       <div class="input ltr">
         <div class="checkbox-select">
           <div>
-              <input type="checkbox" name="sources" value="*" class="all checkbox" id="all" v-model="allSources"/>
-              <label for="all">All</label>
-        </div>
-          <div
-            v-for="(source, i) in sections"
-            v-bind:key="source.label"
-          >
-            <!-- <label> -->
             <input
               type="checkbox"
-              :name="namePrefix + '[sources][]'"
-              :value="source.value"
-              v-bind:class="[{ all: source.value == '*' }, 'checkbox']"
-              :id="'sources' +  i "
-              v-model="selectedSources[source.uid]"
+              name="sections"
+              value="*"
+              class="all checkbox"
+              id="all"
+              v-model="$store.allSections"
             />
-            <label :for="'sources' + i">{{ source.label }}</label>
+            <label for="all">All</label>
+          </div>
+          <div v-for="(section, i) in $store.sectionMap.sections" v-bind:key="section.label">
+            <input
+              type="checkbox"
+              :name="`${$store.namePrefix}[sections][]`"
+              :value="section.uid"
+              :class="[{ all: section.value == '*' }, 'checkbox']"
+              :id="'sections' +  i "
+              :checked="$store.selectedSections.includes(section.uid)"
+              @change="toggleSection"
+            />
+            <label :for="'sections' + i">{{ section.label }}</label>
           </div>
         </div>
-        <!-- </ul> -->
       </div>
-
+    </div>
+    <div class="field" v-if="$store.selectedSections || $store.allSections">
       <div class="heading">
         <label>Entry Types</label>
       </div>
       <div class="input ltr">
         <div class="checkbox-select">
-          <div
-            v-for="entryType in filteredEntryTypes"
-            v-bind:key="entryType.label"
-          >
+          <div v-for="entryType in $store.filteredEntryTypes" v-bind:key="entryType.label">
             <input
               type="checkbox"
-              :name="namePrefix + '[entryTypes][]'"
+              :name="`${$store.namePrefix}[entryTypes][]`"
               class="checkbox"
-              :value="entryType.value"
+              :value="entryType.id"
               :id="entryType.id"
-              v-model="selectedEntryTypes[entryType.id]"
+              :checked="$store.selectedEntryTypes.includes(entryType.id)"
+              @change="toggleEntryType"
             />
             <label :for="entryType.id">{{ entryType.label }}</label>
           </div>
@@ -57,54 +58,61 @@
 
 <script>
 import { Component, Vue } from "vue-property-decorator";
+import { Observer } from "mobx-vue";
+import Store from "../store/store";
 
+@Observer
 @Component({
   props: {
-    sourceOptionsJson: String,
-    sectionMapJson: String
+    sectionOptionsJson: String,
+    sectionMapJson: String,
+    selectedSectionsJson: String,
+    selectedEntryTypesJson: String,
+    fieldUid: String
   }
 })
 export default class RelatedEntryTypesFieldSettings extends Vue {
-  sourceOptions = undefined;
-  allSources = false;
-  selectedSources = {};
-  selectedEntryTypes = {};
-  namePrefix = '';
+  // Use a unique instance of the store per component
+  $store = new Store();
 
-  created() {
-      const prefixContainer = document.querySelector('[data-vue-field-prefix]');
-      const prefixInput = prefixContainer.querySelector('input');
-      if (!prefixInput) {
-          return;
-      }
+  mounted() {
+      console.log(this.$props.fieldUid);
+    const prefixContainer = document.querySelector(
+      `[data-vue-field-prefix="${this.$props.fieldUid}"]`
+    );
+    const prefixInput = prefixContainer.querySelector("input");
+    if (!prefixInput) {
+      return;
+    }
 
-      const name = prefixInput.name;
-      if (!name) {
-          return;
-      }
-      prefixContainer.innerHTML = '';
-    //   debugger;
-      this.namePrefix = name.split("[test]")[0];
+    const name = prefixInput.name;
+    if (!name) {
+      return;
+    }
+    while (prefixContainer.hasChildNodes()) {
+      prefixContainer.removeChild(prefixContainer.firstChild);
+    }
+    this.$store.setNamePrefix(name.split(`[test]`)[0]);
+    this.$store.setSectionOptions(JSON.parse(this.$props.sectionOptionsJson));
+    this.$store.setSectionMap(JSON.parse(this.$props.sectionMapJson));
+    this.$store.setSelectedSections(
+      JSON.parse(this.$props.selectedSectionsJson)
+    );
+    this.$store.setSelectedEntryTypes(
+      JSON.parse(this.$props.selectedEntryTypesJson)
+    );
   }
 
-  get sourceOptions() {
-    return JSON.parse(this.$props.sourceOptionsJson);
+  toggleEntryType(e) {
+      const id = e.target.value;
+      console.log(id);
+      this.$store.toggleEntryType(id);
   }
 
-  get entryTypes() {
-    return this.sectionMap.entryTypes;
-  }
-
-  get sectionMap() {
-      return JSON.parse(this.$props.sectionMapJson);
-  }
-
-  get sections() {
-      return this.sectionMap.sections;
-  }
-
-  get filteredEntryTypes() {
-      return this.entryTypes.filter((entryType) =>this.allSources || this.selectedSources[entryType.sectionUid]);
+  toggleSection(e) {
+      const uid = e.target.value;
+      console.log(uid)
+      this.$store.toggleSection(uid);
   }
 }
 </script>
