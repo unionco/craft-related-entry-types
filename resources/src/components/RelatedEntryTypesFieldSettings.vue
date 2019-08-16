@@ -20,11 +20,11 @@
           <div v-for="(section, i) in sectionMap.sections" v-bind:key="section.label">
             <input
               type="checkbox"
-              :name="`${namePrefix}[sections][]`"
-              :value="section.uid"
+              :name="`${namePrefix}[sources][]`"
+              :value="`section:${section.uid}`"
               :class="[{ all: section.value == '*' }, 'checkbox']"
               :id="`section-${fieldUid}-${section.uid}`"
-              :checked="selectedSections.includes(section.uid)"
+              :checked="selectedSections.includes(`section:${section.uid}`)"
               @change="toggleSection"
             />
             <label :for="`section-${fieldUid}-${section.uid}`">{{ section.label }}</label>
@@ -83,7 +83,7 @@ export default class RelatedEntryTypesFieldSettings extends Vue {
   get filteredEntryTypes() {
     return this.sectionMap.entryTypes.filter(
       entryType =>
-        this.allSections || this.selectedSections.includes(entryType.sectionUid)
+        this.allSections || this.selectedSections.includes(`section:${entryType.sectionUid}`)
     );
   }
 
