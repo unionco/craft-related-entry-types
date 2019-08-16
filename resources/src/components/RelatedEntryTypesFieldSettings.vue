@@ -45,7 +45,7 @@
               class="checkbox"
               :value="entryType.id"
               :id="`entrytype-${fieldUid}-${entryType.id}`"
-              :checked="selectedEntryTypes.includes(entryType.id)"
+              :checked="selectedEntryTypes.includes(`${entryType.id}`)"
               @change="toggleEntryType"
             />
             <label :for="`entrytype-${fieldUid}-${entryType.id}`">{{ entryType.label }}</label>
@@ -126,7 +126,7 @@ export default class RelatedEntryTypesFieldSettings extends Vue {
   }
 
   toggleEntryType(e) {
-    const id = e.target.value;
+    const id = `${e.target.value}`;
     const element = this.selectedEntryTypes.includes(id);
     if (element) {
       this.selectedEntryTypes = this.selectedEntryTypes.filter(

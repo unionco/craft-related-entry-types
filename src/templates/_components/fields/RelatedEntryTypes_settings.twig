@@ -27,7 +27,7 @@
                 disabled: true,
             }) }}
         </div>
-        <ret-settings field-uid-default="{{ uid }}" section-options-json="{{ sourceOptions | json_encode }}" section-map-json="{{ field.getSectionMap() | json_encode }}" selected-sections-json="{{ (field.sections|default([]))|json_encode }}" selected-entry-types-json="{{ (field.entryTypes|default([]))|json_encode }}"/>
+        <ret-settings field-uid-default="{{ uid }}" section-options-json="{{ sourceOptions | json_encode }}" section-map-json="{{ field.getSectionMap() | json_encode }}" selected-sections-json="{{ (field.sources|default([]))|json_encode }}" selected-entry-types-json="{{ (field.entryTypes|default([]))|json_encode }}"/>
     </div>
 
     {% block limitField %}

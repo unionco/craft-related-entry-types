@@ -39,7 +39,7 @@ class CpAsset extends AssetBundle
                 'http://localhost:8080/app.js',
             ];
         } else {
-            $this->depends[] = [VueAsset::class];
+            $this->depends[] = VueAsset::class;
             $this->css = ['css/app.css',];
             $this->js = ['js/chunk-vendors.js', 'js/app.js',];
         }
