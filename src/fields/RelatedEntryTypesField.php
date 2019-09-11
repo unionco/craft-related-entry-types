@@ -17,9 +17,6 @@ use craft\elements\Entry;
 use craft\fields\Entries;
 use craft\helpers\Json;
 use craft\models\EntryType;
-use unionco\relatedentrytypes\assetbundles\relatedentrytypesfield\RelatedEntryTypesFieldAsset;
-use unionco\relatedentrytypes\models\EntryTypes;
-use unionco\relatedentrytypes\models\Sections;
 
 /**
  * @author    Abry Rath <abry.rath@union.co>
@@ -157,12 +154,14 @@ class RelatedEntryTypesField extends Entries
                 'sources' => $this->sources,
                 'entryTypes' => $this->entryTypes,
                 'elements' => $value,
+                'limit' => $this->limit
             ]
         );
     }
 
     /**
      * Returns the sources that should be available to choose from within the field's settings
+     *
      *
      * @return array
      */

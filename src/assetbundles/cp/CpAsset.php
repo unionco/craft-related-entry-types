@@ -40,7 +40,6 @@ class CpAsset extends AssetBundle
             ];
         } else {
             $this->depends[] = VueAsset::class;
-            $this->css = ['css/app.css',];
             $this->js = ['js/chunk-vendors.js', 'js/app.js',];
         }
         parent::init();
