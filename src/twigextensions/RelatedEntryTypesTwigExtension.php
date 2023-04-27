@@ -19,15 +19,15 @@ class RelatedEntryTypesTwigExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction(
+            new \Twig\TwigFunction(
                 'selectedSections',
                 [$this, 'selectedSections']
             ),
-            new \Twig_SimpleFunction(
+            new \Twig\TwigFunction(
                 'entryTypes',
                 [$this, 'entryTypes']
             ),
-            new \Twig_SimpleFunction(
+            new \Twig\TwigFunction(
                 'entryTypeValues',
                 [$this, 'entryTypeValues']
             ),

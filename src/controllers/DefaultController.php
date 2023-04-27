@@ -32,7 +32,7 @@ class DefaultController extends Controller
     //             return Craft::$app->getSections()->getSectionByUid($uid);
     //         }, $sectionUids);
     //     }
-        
+
     //     $selectedEntryTypes = [];
     //     if (count($selectedEntryTypes)) {
     //         $selectedEntryTypes = array_map(function ($selectedEntryTypeId) {

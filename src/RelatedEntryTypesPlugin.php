@@ -48,7 +48,7 @@ class RelatedEntryTypesPlugin extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '0.0.1';
+    public string $schemaVersion = '0.0.1';
 
     // Public Methods
     // =========================================================================
@@ -67,7 +67,7 @@ class RelatedEntryTypesPlugin extends Plugin
         $this->controllerNamespace = 'unionco\relatedentrytypes\controllers';
 
         Craft::$app->view->registerTwigExtension(new RelatedEntryTypesTwigExtension());
-        
+
         Event::on(
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
