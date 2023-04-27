@@ -21,7 +21,9 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^3.0.0-RC1"
+        "craftcms/cms": "^4.0",
+        "rlanvin/php-rrule": "~1.6.0",
+        "php": "^8.0.2"
     },
     "autoload": {
         "psr-4": {
@@ -37,7 +39,16 @@
         "class": "unionco\\relatedentrytypes\\RelatedEntryTypesPlugin"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.4",
-        "vimeo/psalm": "^3.2"
-    }
+        "squizlabs/php_codesniffer": "^3.7",
+        "vimeo/psalm": "^5.9",
+        "craftcms/rector": "dev-main"
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

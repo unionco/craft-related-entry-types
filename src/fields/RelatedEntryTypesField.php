@@ -61,7 +61,7 @@ class RelatedEntryTypesField extends Entries
      * @inheritdoc
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
     }
@@ -70,7 +70,7 @@ class RelatedEntryTypesField extends Entries
      * @inheritdoc
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
 
@@ -81,7 +81,7 @@ class RelatedEntryTypesField extends Entries
      * @inheritdoc
      * @return mixed
      */
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
     {
         return parent::normalizeValue($value, $element);
     }
@@ -90,7 +90,7 @@ class RelatedEntryTypesField extends Entries
      * @inheritdoc
      * @return mixed
      */
-    public function serializeValue($value, ElementInterface $element = null)
+    public function serializeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
     {
         return parent::serializeValue($value, $element);
     }
@@ -99,7 +99,7 @@ class RelatedEntryTypesField extends Entries
      * @inheritdoc
      * @return null|string
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         // Get our id and namespace
         $handle = $this->handle ?? 'related_entry_types';
@@ -127,7 +127,7 @@ class RelatedEntryTypesField extends Entries
     /**
      * @inheritdoc
      */
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?\craft\base\ElementInterface $element = null): string
     {
         // Get our id and namespace
         $id = Craft::$app->getView()->formatInputId($this->handle);
