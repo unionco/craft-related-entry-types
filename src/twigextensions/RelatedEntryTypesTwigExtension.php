@@ -3,7 +3,7 @@
 namespace unionco\relatedentrytypes\twigextensions;
 
 use Craft;
-use craft\models\Section;
+use craft\web\Application;
 use Twig\Extension\AbstractExtension;
 use unionco\relatedentrytypes\RelatedEntryTypesPlugin;
 use unionco\relatedentrytypes\fields\RelatedEntryTypesField;
@@ -12,8 +12,10 @@ class RelatedEntryTypesTwigExtension extends AbstractExtension
 {
     public function __construct()
     {
-        $env = Craft::$app->getView()->getTwig();
-        $env->addGlobal('relatedEntryTypes', RelatedEntryTypesPlugin::$plugin);
+        Craft::$app->on(Application::EVENT_INIT, function () {
+            $env = Craft::$app->getView()->getTwig();
+            $env->addGlobal('relatedEntryTypes', RelatedEntryTypesPlugin::$plugin);
+        });
     }
 
     public function getFunctions()
